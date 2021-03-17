@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+
+  redis_db:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  api:
+    build:
+      context: .
+    volumes:
+      - .:/go/src/github.com/bekjeera/weather_v2
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis_db
+    links:
+      - redis_db
+  
